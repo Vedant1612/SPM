@@ -22,8 +22,9 @@ class Assembler{
 			{
 				continue;
 			}
-			start_value = start_value + 1;
+			
 			asm[i][0] = String.valueOf(start_value);
+			start_value = start_value + 1;
 		}
 		return asm;
 	}
@@ -85,7 +86,7 @@ class Assembler{
 					String icStr = "S," + asm[i][j];
 					ic.get(i).add(icStr);
 				}
-				if(asm[i][j].matches("[0-9]") && asm[i][j] != asm[i][0])
+				if(asm[i][j].matches("[0-9]+") && asm[i][j] != asm[i][0] && i!=0)
 				{
 					String litStr = lit_index +"," +asm[i][j] + "," + asm[i][0];
 					lit.get(i).add(litStr);
@@ -113,6 +114,7 @@ class Assembler{
 			}
 			System.out.println();
 		}
+		System.out.println("********************************************************");
 		System.out.println("SYM");
 		for(ArrayList<String> str:sym)
 		{
@@ -122,6 +124,7 @@ class Assembler{
 			}
 			System.out.println();
 		}
+		System.out.println("********************************************************");
 		System.out.println("LIT");
 		for(ArrayList<String> str:lit)
 		{
@@ -131,6 +134,7 @@ class Assembler{
 			}
 			System.out.println();
 		}
+		System.out.println("********************************************************");
 		System.out.println("POOL");
 		for(ArrayList<String> str:pol)
 		{
@@ -205,6 +209,18 @@ public class PASS2 {
 				{"","Y","DS","2",""},
 				{"","","STOP","",""},
 				{"","","END","",""}
+
+				// {"","","START","100",""},
+				// {"","","MOVER","AREG","X"},
+				// {"","","MOVER","BREG","Y"},
+				// {"","","ADD","AREG","X"},
+				// {"","","MOVEM","AREG","X"},
+				// {"","X","DS","10",""},
+				// {"","Y","DS","15",""},
+				// // {"","","STOP","",""},
+				// {"","","END","",""}
+
+				
 		};
 		
 		String mot[][] = {
@@ -237,10 +253,16 @@ public class PASS2 {
 		Assembler assembler = new Assembler();
 		String[][] asm_with_lc;
 		asm_with_lc = assembler.assignLC(asm_code);
+		System.out.println();
+		System.out.println("********************************************************");
 		assembler.printCode(asm_with_lc);
+		System.out.println();
+		System.out.println("********************************************************");
 		assembler.generateOutput(asm_with_lc, mot);
+		System.out.println("********************************************************");
 		assembler.printFinalOutput();
 		assembler.generateMachineCode();
+		System.out.println("********************************************************");
 		System.out.println("MACHINE CODE");
 		for(ArrayList<String> str:assembler.machine_code)
 		{
@@ -250,6 +272,7 @@ public class PASS2 {
 			}
 			System.out.println();
 		}
+		System.out.println("********************************************************");
 		
 	}
 
